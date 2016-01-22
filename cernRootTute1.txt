@@ -1,0 +1,71 @@
+//CERN ROOT tute 1
+
+
+//create a pointer that can reference to TFile class
+TFile* f = new TFile ("demo.root")
+f->close()
+
+//create instance from TFile
+TFile f("demo.root","recreate");    //to overwrite
+TFile f("demo.root".);              //to read
+TFile f("demo.root","recreate");    //to append
+f.Close()
+
+f.ls()  //to list while in side this TFile object "f"
+
+tip:use tab to autocomplete the input.
+tip:ROOT file is independent of .root file extension
+
+
+//example 1: save objects to root file
+
+TFile* f = new TFile ("test.root","recreate");
+
+f->ls()
+
+TH1F h0("h0","histo0",100,-10,10)
+TH1F h1("h1","histo1",100,-10,10)
+
+h0.FillRandom("gaus",100)
+h1.FillRandom("gaus",100)
+
+h0.Write()
+h1.Write()
+
+f->ls()
+//you can see two new histograms in the test.root file
+
+//lets update h0
+h0.FillRandom("gaus",200)
+h0.Draw()
+h0.Write()
+f->ls()
+
+
+//example 2: to make a directory
+
+TFile:: mkdir("char")   //to mkdire
+TFile:: cd()            //to change dir
+TFile:: delete()        //to delete element of dir
+TFile:: ls("-m")        //to see objects in memory
+gDirectory-pwd()        //to show the current path
+new TBrowser            //opens a window to browse for files (like windows explorer)
+
+TFile* f1 = new TFile ("test1.root","recreate")
+TFile* f2 = new TFile ("test2.root","recreate")
+gDirectory->pwd()
+f1->cd()
+f1->ls()
+f1->mkdir("new_dir")
+f1->ls()
+f1->cd("new_dir")
+TH1F h0("h0","histo0",100,-10,10)
+h0.FillRandom("gaus",100)
+h0.Write()
+f1->ls()
+
+
+//example 3: to retrieve objects
+TFile f("demo.root")
+f1.GetListOfKeys()->Print()
+f.ls()
